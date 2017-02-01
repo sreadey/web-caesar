@@ -42,10 +42,7 @@ class MainHandler(webapp2.RequestHandler):
     def post(self):
         message = self.request.get("message")
         rotation = self.request.get("rotation")
-        if not rotation:
-            rotation = 0
-        else:
-            rotation = int(rotation)
+        rotation = int(rotation) if rotation else 0
 
         encrypted_message = caesar.encrypt(message, rotation)
         escaped_message = cgi.escape(encrypted_message)

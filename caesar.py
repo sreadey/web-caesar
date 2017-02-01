@@ -1,32 +1,22 @@
+import string
 
-def alphabet_position(letter):
-    ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    uplo = ""
-    x = 0
-    if ABC.find(letter) > -1:
-        x = ABC.find(letter)
-        uplo = "UP"
-    else:
-        let = letter.upper()
-        if ABC.find(let) > -1:
-            x = ABC.find(let)
-            uplo = "lo"
-    return (x, uplo)
+def alphabet_position(char, ABC):
+    return ABC.index(char)
 
 def rotate_character(char, rot):
-    ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    p_c = alphabet_position(char)
-    sum = (p_c[0] + rot) % 26
-    if p_c[1] == "lo":
-        return (ABC[sum].lower(),True)
-    elif p_c[1] == "UP":
-        return(ABC[sum],True)
-    else:
-        return (char,False)
+    if not char.isalpha():
+        return char
+    ABC = string.ascii_uppercase if char.isupper() else string.ascii_lowercase
+    x = alphabet_position(char,ABC)
+    sum = (x + rot) % len(ABC)
+    return(ABC[sum])
 
 def encrypt(text, rot):
-    ntxt = ''
-    for i in range(len(text)):
-        char_bool = rotate_character(text[i], rot)
-        ntxt += char_bool[0]
-    return ntxt
+    #ntxt = ''
+    #for char in text:
+    #    ntxt += rotate_character(char, rot)
+    #return ntxt
+    nlst = []
+    for char in text:
+        nlst.append(rotate_character(char, rot))
+    return "".join(nlst)
